@@ -9,6 +9,15 @@ change. If you don't have time, please consider [raising an issue]
 
 ## Releasing
 
-Please follow the git flow release procedure, and open a PR to merge the
-release into master.
+Please follow the release procedure outlined below. The PR is a good place to
+prepare the release note and make last minute changes/fixes to the releasable.
 
+```
+git flow release start vx.x.x
+npm version patch | minor | major --no-git-tag-version
+git flow release publish vx.x.x
+# open a pr from release/vx.x.x to master
+# use the pr to prepare the release note and make last-minute changes
+git flow release finish vx.x.x
+git push && git push --tags
+```
