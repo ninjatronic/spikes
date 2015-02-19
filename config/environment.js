@@ -9,7 +9,7 @@ module.exports = function(environment) {
 
     contentSecurityPolicy: {
       'style-src': "'self' http://maxcdn.bootstrapcdn.com",
-      'script-src': "'self' http://maxcdn.bootstrapcdn.com",
+      'script-src': "'self' http://maxcdn.bootstrapcdn.com da189i1jfloii.cloudfront.net",
       'font-src': "'self' http://maxcdn.bootstrapcdn.com"
     },
 
@@ -32,6 +32,8 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.APP.KINVEY_APP_ID = 'kid_Z1fO22y_s';
+    ENV.APP.KINVEY_APP_SECRET = '74783fda6bb8472cb66af0ebc862eae9';
   }
 
   if (environment === 'test') {
@@ -44,10 +46,14 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    
+    ENV.APP.KINVEY_APP_ID = 'kid_Z1fO22y_s';
+    ENV.APP.KINVEY_APP_SECRET = '74783fda6bb8472cb66af0ebc862eae9';
   }
 
   if (environment === 'production') {
-
+    ENV.APP.KINVEY_APP_ID = 'kid_Z1fO22y_s';
+    ENV.APP.KINVEY_APP_SECRET = '74783fda6bb8472cb66af0ebc862eae9';
   }
 
   return ENV;
