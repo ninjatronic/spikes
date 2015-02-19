@@ -9,8 +9,9 @@ module.exports = function(environment) {
 
     contentSecurityPolicy: {
       'style-src': "'self' http://maxcdn.bootstrapcdn.com",
-      'script-src': "'self' http://maxcdn.bootstrapcdn.com da189i1jfloii.cloudfront.net",
+      'script-src': "'self' http://maxcdn.bootstrapcdn.com da189i1jfloii.cloudfront.net apis.google.com",
       'font-src': "'self' http://maxcdn.bootstrapcdn.com",
+      'frame-src': "'self' accounts.google.com",
       'connect-src': "'self' https://baas.kinvey.com"
     },
 
