@@ -10,7 +10,8 @@ module.exports = function(environment) {
     contentSecurityPolicy: {
       'style-src': "'self' http://maxcdn.bootstrapcdn.com",
       'script-src': "'self' http://maxcdn.bootstrapcdn.com da189i1jfloii.cloudfront.net",
-      'font-src': "'self' http://maxcdn.bootstrapcdn.com"
+      'font-src': "'self' http://maxcdn.bootstrapcdn.com",
+      'connect-src': "'self' https://baas.kinvey.com"
     },
 
     EmberENV: {
