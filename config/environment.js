@@ -6,6 +6,13 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+
+    contentSecurityPolicy: {
+      'style-src': "'self' http://maxcdn.bootstrapcdn.com",
+      'script-src': "'self' http://maxcdn.bootstrapcdn.com",
+      'font-src': "'self' http://maxcdn.bootstrapcdn.com"
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
