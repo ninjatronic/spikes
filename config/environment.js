@@ -11,7 +11,7 @@ module.exports = function(environment) {
       'style-src': "'self' 'unsafe-inline' http://maxcdn.bootstrapcdn.com",
       'script-src': "'self' 'unsafe-eval' http://maxcdn.bootstrapcdn.com da189i1jfloii.cloudfront.net apis.google.com",
       'font-src': "'self' http://maxcdn.bootstrapcdn.com",
-      'frame-src': "'self' accounts.google.com",
+      'frame-src': "'self' apis.google.com accounts.google.com",
       'connect-src': "'self' https://baas.kinvey.com"
     },
 
