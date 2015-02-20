@@ -7,7 +7,6 @@ GooglePlusService = Ember.Object.extend
     new Ember.RSVP.Promise (resolve, reject) ->
       gapi.auth.signIn
         'callback': (response) ->
-          console.log response
           if response.error?
             if response.error isnt 'immediate_failed'
               reject response.error

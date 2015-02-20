@@ -8,11 +8,13 @@ module.exports = function(environment) {
     locationType: 'auto',
 
     contentSecurityPolicy: {
-      'style-src': "'self' 'unsafe-inline' http://maxcdn.bootstrapcdn.com",
-      'script-src': "'self' 'unsafe-eval' http://maxcdn.bootstrapcdn.com da189i1jfloii.cloudfront.net apis.google.com",
-      'font-src': "'self' http://maxcdn.bootstrapcdn.com",
-      'frame-src': "'self' apis.google.com accounts.google.com",
-      'connect-src': "'self' https://baas.kinvey.com"
+      'style-src': '\'self\' \'unsafe-inline\' maxcdn.bootstrapcdn.com fonts.googleapis.com',
+      'script-src': '\'self\' \'unsafe-eval\' maxcdn.bootstrapcdn.com da189i1jfloii.cloudfront.net apis.google.com maps.gstatic.com *.googleapis.com',
+      'font-src': '\'self\' maxcdn.bootstrapcdn.com fonts.gstatic.com',
+      'frame-src': '\'self\' apis.google.com accounts.google.com',
+      'connect-src': '\'self\' baas.kinvey.com',
+      'img-src': '\'self\' maps.gstatic.com csi.gstatic.com *.googleapis.com',
+      'report-uri': 'localhost:4200'
     },
 
     EmberENV: {
