@@ -1,1 +1,30 @@
+<nav class='navbar navbar-default'>
+  <div class='container-fluid'>
+    <div class='navbar-header'>
+      <a class='navbar-brand'>
+        Spikes
+      </a>
+    </div>
+
+    <div class='navbar-collapse collapse'>
+      <ul class='nav navbar-nav navbar-left'>
+      </ul>
+      <ul class='nav navbar-nav navbar-right'>
+        <li>
+          {{#if hasActiveUser}}
+          <a {{action 'logout'}}>
+              <i class='fa fa-sign-out'></i>
+              Logout
+            </a>
+          {{else}}
+            <a {{action 'login'}}>
+              <i class='fa fa-google-plus-square'></i>
+              Login
+            </a>
+          {{/if}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 {{outlet}}
