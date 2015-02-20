@@ -15,6 +15,7 @@ prepare the release note and make last minute changes/fixes to the releasable.
 ```
 git flow release start vx.x.x
 npm version patch | minor | major --no-git-tag-version
+git commit -am 'version bump'
 git flow release publish vx.x.x
 # open a pr from release/vx.x.x to master
 # use the pr to prepare the release note and make last-minute changes
