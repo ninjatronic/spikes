@@ -8,6 +8,7 @@
 #   center: LatLngModel
 #   zoom: Number
 #   bounds: LatLngBoundsModel
+#   markers: [MarkerModel]
 #
 #   click: 'click'
 #   rightclick: 'rightclick'
@@ -24,7 +25,6 @@ GoogleMapComponent = Ember.Component.extend Ember.Evented,
     'dragend'
     'dragstart'
     'heading_changed'
-    'idle'
     'maptypeid_changed'
     'mousemove'
     'mouseout'
@@ -40,6 +40,7 @@ GoogleMapComponent = Ember.Component.extend Ember.Evented,
   _mapActions: [
     'click'
     'rightclick'
+    'idle'
   ]
 
   # compute the dom element for the map
@@ -100,7 +101,11 @@ GoogleMapComponent = Ember.Component.extend Ember.Evented,
   _zoom: Ember.computed '_contextZoom', '_defaultZoom', ->
     contextZoom = @get '_contextZoom'
     defaultZoom = @get '_defaultZoom'
-    return contextZoom or defaultZoom
+
+    if contextZoom?
+      return contextZoom
+    else
+      return defaultZoom
 
   _updateMapOnZoomChange: Ember.observer '_zoom', ->
     @get 'map'
@@ -182,7 +187,8 @@ GoogleMapComponent = Ember.Component.extend Ember.Evented,
     @get '_mapActions'
     .forEach (mapAction) =>
       @_setupMapEventListener mapAction, (event) =>
-        @sendAction mapAction.camelize(), LatLng.create event.latLng
+        @sendAction mapAction.camelize(), \
+          if event? then LatLng.create event.latLng
 
   #
   # when the component element is inserted call the setup method
@@ -190,5 +196,66 @@ GoogleMapComponent = Ember.Component.extend Ember.Evented,
 
   didInsertElement: ->
     @_setup()
+
+  #
+  # observe the context markers and propagate changes to the map
+  #
+
+  _contextMarkers: Ember.computed.alias 'markers'
+
+  _setupContextMarkersOnInit: Ember.on 'init', ->
+    @_setupContextMarkersEnumerableObserver()
+    @_addContextMarkersToMap @get '_contextMarkers'
+
+  _setupContextMarkersOnChanged: Ember.observer '_contextMarkers', ->
+    @_setupContextMarkersEnumerableObserver()
+    @_addContextMarkersToMap @get '_contextMarkers'
+
+  _teardownContextMarkersBeforeChange: \
+    Ember.beforeObserver '_contextMarkers', ->
+      contextMarkers = @get '_contextMarkers'
+      @_teardownContextMarkersEnumerableObserver()
+      @_removeContextMarkersFromMap contextMarkers, contextMarkers, 0
+
+  _contextMarkersEnumerableObserver: ->
+    willChange: (contextMarkers, removingItems) =>
+      @_removeContextMarkersFromMap removingItems
+    didChange: (contextMarkers, removedCount, addedItems) =>
+      @_addContextMarkersToMap addedItems
+
+  _removeContextMarkersFromMap: (markersToRemove) ->
+    markersToRemove?.forEach (marker) ->
+      marker.set 'map', null
+
+  _addContextMarkersToMap: (markersToAdd) ->
+    markersToAdd?.forEach (marker) =>
+      marker.set 'map', @get 'map'
+
+  _setupContextMarkersEnumerableObserver: ->
+    contextMarkers = @get '_contextMarkers'
+    contextMarkersEnumerableObserver = @get 'contextMarkersEnumerableObserver'
+    contextMarkers?.addEnumerableObserver this, contextMarkersEnumerableObserver
+
+  _teardownContextMarkersEnumerableObserver: \
+    Ember.beforeObserver '_contextMarkers', ->
+      contextMarkers = @get '_contextMarkers'
+      contextMarkersEnumerableObserver = @get 'contextMarkersEnumerableObserver'
+      contextMarkers?.removeEnumerableObserver \
+        this, contextMarkersEnumerableObserver
+
+  #
+  # observe the map and teardown/setup the context markers when it changes
+  #
+
+  _teardownMarkersBeforeMapChange: Ember.beforeObserver 'map', ->
+    @get 'markers'
+    ?.forEach (marker) ->
+      marker.set 'map', null
+
+  _setupMarkersOnMapChanged: Ember.observer 'map', ->
+    @get 'markers'
+    ?.forEach (marker) =>
+      marker.set 'map', @get 'map'
+
 
 `export default GoogleMapComponent`
